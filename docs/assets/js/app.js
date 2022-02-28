@@ -8,7 +8,7 @@ $(document).ready(function(){
         clientId: 3,
         key: 'wjD0jJU7EuKP3kGvJyhYvA((',
         // Used for cross domain communication, it will be validated
-        channelUrl: 'https://abhinavojhafinastra.github.io/stack-bulk-update/proxy',
+        channelUrl: 'https://abhinavojhafinastra.github.io/stack-bulk-update/',
         // Called when all initialization is finished
         complete: function(data) {
             $('#login-button')
