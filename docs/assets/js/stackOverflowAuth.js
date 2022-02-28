@@ -16,6 +16,8 @@ function (constUndefined) {
         encodeURIComponent = window.encodeURIComponent,
         nextState = 1,
         windowName = "sew" + nextState++,
+        appDomain,
+        appBase,
         seUrl = 'https://finastra.stackenterprise.co',
         fetchUserUrl = 'https://finastra.stackenterprise.co/2.0/me/associated',
         optionsRequired = 'must pass an object';
@@ -46,6 +48,8 @@ function (constUndefined) {
             domain = (protocol + '//' + window.location.host).toLowerCase();
 
         requestKey = requireOption(options, 'key');
+        appDomain = requireOption(options, 'appDomain');
+        appBase = requireOption(options, 'appBase');
 
         // Don't touch these goofy @~ comments, they're used in the build script
 
@@ -59,8 +63,8 @@ function (constUndefined) {
             throw 'channelUrl must be under the current domain';
         }
 
-//        loginUrl = seUrl + '/oauth/dialog?redirect_uri=' + encodeURIComponent(proxyUrl);
-        loginUrl = seUrl + '/oauth/dialog?redirect_uri=' + encodeURIComponent('https://abhinavojhafinastra.github.io/stack-bulk-update' + '/login_success?assisted=' + cid + '&protocol=' + proto + '&proxy=' + encodeURIComponent(proxyUrl));
+
+        loginUrl = seUrl + '/oauth/dialog?redirect_uri=' + encodeURIComponent(appDomain + '/' + appBase + '/login_success?assisted=' + cid + '&protocol=' + proto + '&proxy=' + encodeURIComponent(proxyUrl));
 
 //        loginUrl = seUrl + '/oauth/dialog?redirect_uri=' + encodeURIComponent(seUrl + '/oauth/login_success?assisted=' + cid + '&protocol=' + proto + '&proxy=' + encodeURIComponent(proxyUrl));
 
@@ -148,7 +152,9 @@ function (constUndefined) {
         handler =
             function (e) {
                 // came from the site we expected and the *window* we opened
-                if (e.origin !== seUrl || e.source !== opened) { return; }
+//                if (e.origin !== seUrl || e.source !== opened) { return; }
+
+                if (e.origin !== appDomain) { return; }
 
                 var expires,
                     token,

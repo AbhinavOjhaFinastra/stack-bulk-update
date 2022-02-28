@@ -1,7 +1,7 @@
 ---
-layout: page
+layout: none
 title: Login Success
-permalink: /login_success/
+permalink: /login_success
 ---
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
@@ -13,7 +13,7 @@ permalink: /login_success/
 <script>
     $(function () {
         var domain = 'https://abhinavojhafinastra.github.io';
-        var proxy = 'https://abhinavojhafinastra.github.io/stack-bulk-update/';
+        var proxy = 'https://abhinavojhafinastra.github.io/stack-bulk-update';
 
         // see https://stackoverflow.com/a/10965203/1114
         var testContainer = document.createElement('div');

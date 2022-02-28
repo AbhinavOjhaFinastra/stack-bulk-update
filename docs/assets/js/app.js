@@ -9,6 +9,8 @@ $(document).ready(function(){
         key: 'wjD0jJU7EuKP3kGvJyhYvA((',
         // Used for cross domain communication, it will be validated
         channelUrl: 'https://abhinavojhafinastra.github.io/stack-bulk-update/',
+        appDomain: 'https://abhinavojhafinastra.github.io',
+        appBase: 'stack-bulk-update',
         // Called when all initialization is finished
         complete: function(data) {
             $('#login-button')
