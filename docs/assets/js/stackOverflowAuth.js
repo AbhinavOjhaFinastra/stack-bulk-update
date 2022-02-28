@@ -59,7 +59,9 @@ function (constUndefined) {
             throw 'channelUrl must be under the current domain';
         }
 
-        loginUrl = seUrl + '/oauth/dialog?redirect_uri=' + encodeURIComponent(seUrl + '/oauth/login_success?assisted=' + cid + '&protocol=' + proto + '&proxy=' + encodeURIComponent(proxyUrl));
+        loginUrl = seUrl + '/oauth/dialog?redirect_uri=' + encodeURIComponent(proxyUrl);
+
+//        loginUrl = seUrl + '/oauth/dialog?redirect_uri=' + encodeURIComponent(seUrl + '/oauth/login_success?assisted=' + cid + '&protocol=' + proto + '&proxy=' + encodeURIComponent(proxyUrl));
 
         // This is effectively a place holder, in case we need any longer running initialization in the future
         //   putting it on a timeout so nobody assumes it maintains any magic state w.r.t. clicking or loading
