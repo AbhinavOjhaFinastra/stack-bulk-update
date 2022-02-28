@@ -13,7 +13,7 @@ permalink: /login_success/
 <script>
     $(function () {
         var domain = 'https://abhinavojhafinastra.github.io';
-        var proxy = 'https://abhinavojhafinastra.github.io/finastra.stackenterprise.github.io/test';
+        var proxy = 'https://abhinavojhafinastra.github.io/stack-bulk-update/';
 
         // see https://stackoverflow.com/a/10965203/1114
         var testContainer = document.createElement('div');
