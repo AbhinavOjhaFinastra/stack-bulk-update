@@ -36,7 +36,8 @@ $(document).ready(function(){
             error: function(data) {
                 alert('An error occurred:\n' + data.errorName + '\n' + data.errorMessage);
             },
-            scope: ['read_inbox', 'private_info']
+            networkUsers: true,
+            scope: ['write_access']
         });
     });
 });
