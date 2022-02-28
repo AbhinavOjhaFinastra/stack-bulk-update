@@ -9,7 +9,19 @@ layout: home
 <script src="{{ site.baseurl }}/assets/js/app.js"></script>
 <script src="{{ site.baseurl }}/assets/js/readCSV.js"></script>
 
-<button id="login-button">Login</button>
+<div class="container" style="margin-top: 30px;">
+    <div class="col-md-4">
+        Client Id - <input type="text" id="clientId" class="form-control">
+        Key - <input type="text" id="clientKey" class="form-control">
+        You can find the Client ID and Key by navigating to your user's API Access Key section: [Finastra Stack Enterprise](https://finastra.stackenterprise.co)
+    </div>
+    <div class="col-md-4">
+        <button id="login-button">Login</button>
+    </div>
+    <div class="col-md-4">
+        <span id="generated-token"></span>
+    </div>
+</div>
 
 <div class="container" style="margin-top: 30px;">
     <div class="col-md-4">
