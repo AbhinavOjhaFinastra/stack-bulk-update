@@ -36,7 +36,6 @@ $(document).ready(function(){
             error: function(data) {
                 alert('An error occurred:\n' + data.errorName + '\n' + data.errorMessage);
             },
-            networkUsers: true,
             scope: ['write_access']
         });
     });
