@@ -1,37 +1,122 @@
-// For simplicity, we're using jQuery for some things
-//   However, the library has no jQuery dependency
-$(document).ready(function(){
+$(document).ready(function() {
+	var csvParsedArray = [];
+	$(document).on('submit', '#bulk-update-form', function(e) {
+        e.preventDefault();
 
-    // Attach click handler to login button
-    $('#login-button').click(function() {
-        FSE.init({
-            // Parameters obtained by registering an app, these are specific to the SE
-            //   documentation site
-            clientId: $('#clientId').val(),
-            key: $('#clientKey').val(),
-            // Used for cross domain communication, it will be validated
-            channelUrl: 'https://abhinavojhafinastra.github.io/stack-bulk-update/',
-            appDomain: 'https://abhinavojhafinastra.github.io',
-            appBase: 'stack-bulk-update',
-            // Called when all initialization is finished
-            complete: function(data) {
-                $('#login-button')
-                    .removeAttr('disabled')
-                    .text('Generate Token');
-            }
-        });
+		FSE.init({
+			// Parameters obtained by registering an app, these are specific to the SE
+			//   documentation site
+			clientId: $('#clientId').val(),
+			key: $('#clientKey').val(),
+			// Used for cross domain communication, it will be validated
+			channelUrl: 'https://abhinavojhafinastra.github.io/stack-bulk-update/',
+			appDomain: 'https://abhinavojhafinastra.github.io',
+			appBase: 'stack-bulk-update',
+			// Called when all initialization is finished
+			complete: function(data) {
+				$('#login-button')
+					.removeAttr('disabled')
+					.text('Generate Token');
+			}
+		});
 
-        // Make the authentication call, note that being in an onclick handler
-        //   is important; most browsers will hide windows opened without a
-        //   'click blessing'
-        FSE.authenticate({
-            success: function(data) {
-                $('#generated-token').text(data.accessToken);
-            },
-            error: function(data) {
-                alert('An error occurred:\n' + data.errorName + '\n' + data.errorMessage);
-            },
-            scope: ['write_access']
-        });
-    });
+		// Make the authentication call, note that being in an onclick handler
+		//   is important; most browsers will hide windows opened without a
+		//   'click blessing'
+		FSE.authenticate({
+			success: function(data) {
+				$('#generated-token').val(data.accessToken);
+
+				runCSVUpload();
+			},
+			error: function(data) {
+				alert('An error occurred:\n' + data.errorName + '\n' + data.errorMessage);
+			},
+			scope: ['write_access']
+		});
+
+
+	});
+
+	function runCSVUpload() {
+		if ($("#fileToUpload").get(0).files.length == 0) {
+			alert("Please upload the file first.");
+			return;
+		}
+		let fileUpload = $("#fileToUpload").get(0);
+		let files = fileUpload.files;
+		if (files[0].name.toLowerCase().lastIndexOf(".csv") == -1) {
+			alert("Please upload only CSV files");
+			return;
+		}
+		let reader = new FileReader();
+		let bytes = 50000;
+
+		reader.onloadend = function(evt) {
+			let lines = evt.target.result;
+			if (lines && lines.length > 0) {
+				let line_array = CSVToArray(lines);
+				if (lines.length == bytes) {
+					line_array = line_array.splice(0, line_array.length - 1);
+				}
+				var columnArray = [];
+				var stringHeader = "<thead><tr>";
+				var stringBody = "<tbody>";
+				for (let i = 0; i < line_array.length; i++) {
+					let cellArr = line_array[i];
+					stringBody += "<tr>";
+					for (var j = 0; j < cellArr.length; j++) {
+						if (i == 0) {
+							columnArray.push(cellArr[j].replace('ï»¿', ''));
+							stringHeader += "<th>" + columnArray[j] + "</th>";
+						} else {
+							stringBody += "<td>" + cellArr[j] + "</td>";
+							csvParsedArray.push({
+								"column": columnArray[j],
+								"value": cellArr[j]
+							});
+						}
+					}
+					stringBody += "</tr>";
+				}
+				stringBody += "</tbody>";
+				stringHeader += "</tr></thead>";
+				$('.csv-table table').append(stringHeader);
+				$('.csv-table table').append(stringBody);
+			}
+		}
+
+		let blob = files[0].slice(0, bytes);
+		reader.readAsBinaryString(blob);
+	}
+
+	function CSVToArray(strData, strDelimiter) {
+		strDelimiter = (strDelimiter || ",");
+		let objPattern = new RegExp(
+			(
+				"(\\" + strDelimiter + "|\\r?\\n|\\r|^)" +
+				"(?:\"([^\"]*(?:\"\"[^\"]*)*)\"|" +
+				"([^\"\\" + strDelimiter + "\\r\\n]*))"
+			),
+			"gi"
+		);
+		let arrData = [
+			[]
+		];
+		let arrMatches = null;
+		while (arrMatches = objPattern.exec(strData)) {
+			let strMatchedDelimiter = arrMatches[1];
+			let strMatchedValue = [];
+			if (strMatchedDelimiter.length && (strMatchedDelimiter != strDelimiter)) {
+				arrData.push([]);
+			}
+			if (arrMatches[2]) {
+				strMatchedValue = arrMatches[2].replace(new RegExp("\"\"", "g"), "\"");
+			} else {
+				strMatchedValue = arrMatches[3];
+			}
+			arrData[arrData.length - 1].push(strMatchedValue);
+		}
+		return (arrData);
+	}
 });
