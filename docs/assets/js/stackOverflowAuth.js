@@ -47,6 +47,8 @@ function (constUndefined) {
             proto = protocol.substring(0, protocol.length - 1),
             domain = (protocol + '//' + window.location.host).toLowerCase();
 
+        let error = options.error;
+
         requestKey = requireOption(options, 'key');
         appDomain = requireOption(options, 'appDomain');
         appBase = requireOption(options, 'appBase');
@@ -60,7 +62,8 @@ function (constUndefined) {
 
         // proxyUrl must be under the currently hosting domain
         if (proxyUrl.toLowerCase().indexOf(domain) !== 0) {
-            throw 'channelUrl must be under the current domain';
+            error && error({ errorName: 'Invalid Channel Url', errorMessage: 'channelUrl must be under the current domain' });
+//            throw 'channelUrl must be under the current domain';
         }
 
 
@@ -190,7 +193,7 @@ function (constUndefined) {
                     if (options.networkUsers) {
                         fetchUsers(token, expires, success, error);
                     } else {
-                        success({ accessToken: token, expirationDate: expires });
+                        success({ accessToken: token, expirationDate: expires, requestKey: requestKey });
                     }
 
                     return;

@@ -27,7 +27,38 @@ layout: home
             </div>
         </div>
     </form>
-    <div class="table-responsive col-md-12 csv-table" style="margin-top: 20px;">
-        <table class="table table-bordered table-hover table-striped"></table>
+</div>
+<div id="uploadProgressDiv" style="display: none; margin-top: 20px;" class="progress">
+    <div id="uploadProgress" class="progress-bar progress-bar-striped progress-bar-animated" style="width:0%"></div>
+</div>
+<div class="container-fluid">
+    <br>
+    <div style="display: none;" id="bulkUpdateResult">
+        <!-- Nav tabs -->
+        <ul class="container-fluid nav nav-tabs" role="tablist">
+          <li class="nav-item">
+            <a style="text-decoration:none" class="nav-link active" data-bs-toggle="tab" href="#createdQuesTab">Created</a>
+          </li>
+          <li class="nav-item">
+            <a style="text-decoration:none" class="nav-link" data-bs-toggle="tab" href="#failedQuesTab">
+                Failed <span style="display: none;" id="errorBadge" class="badge rounded-pill bg-danger">Error</span>
+            </a>
+          </li>
+        </ul>
+        <!-- Tab panes -->
+        <div class="tab-content">
+            <div id="createdQuesTab" class="tab-pane active table-responsive csv-table" style="margin-top: 20px;">
+                <table class="table table-bordered table-hover table-striped">
+                    <thead><tr><th>Title</th><th>Body</th><th>Tags</th><th>Link</th></tr></thead>
+                    <tbody id="createdQues"></tbody>
+                </table>
+            </div>
+            <div id="failedQuesTab" class="tab-pane fade table-responsive csv-table" style="margin-top: 20px;">
+                <table class="table table-bordered table-hover table-striped">
+                    <thead><tr><th>Title</th><th>Body</th><th>Tags</th><th>Error</th></tr></thead>
+                    <tbody id="failedQues"></tbody>
+                </table>
+            </div>
+        </div>
     </div>
 </div>
