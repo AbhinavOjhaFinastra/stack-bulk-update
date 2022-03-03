@@ -95,7 +95,7 @@ $(document).ready(function() {
 				    progressStep = 100/totalQues;
 				}
 
-				for (let i = 0; i < totalQues; i++) {
+				for (let i = 0; i < line_array.length; i++) {
 					let cellArr = line_array[i];
 
 					if (cellArr && cellArr.length > 0 && cellArr[0] != "") {
