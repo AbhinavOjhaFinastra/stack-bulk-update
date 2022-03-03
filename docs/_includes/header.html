@@ -1,0 +1,20 @@
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+  {%- assign default_paths = site.pages | map: "path" -%}
+  {%- assign page_paths = site.header_pages | default: default_paths -%}
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" rel="author" href="{{ "/" | relative_url }}">{{ site.title | escape }}</a>
+    </div>
+    {%- if page_paths -%}
+    <ul class="nav navbar-nav navbar-right">
+      <li class="nav-item"><a class="nav-link" target="_blank" href="https://finastra.stackenterprise.co">Finastra Stack Enterprise</a></li>
+      {%- for path in page_paths -%}
+      {%- assign my_page = site.pages | where: "path", path | first -%}
+        {%- if my_page.title and my_page.title != 'Login Success' -%}
+          <li class="nav-item"><a class="nav-link" href="{{ my_page.url | relative_url }}">{{ my_page.title | escape }}</a></li>
+        {%- endif -%}
+      {%- endfor -%}
+    </ul>
+    {%- endif -%}
+  </div>
+</nav>
