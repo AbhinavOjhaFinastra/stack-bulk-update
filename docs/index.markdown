@@ -29,7 +29,7 @@ layout: home
     </form>
 </div>
 <div id="uploadProgressDiv" style="display: none; margin-top: 20px;" class="progress">
-    <div id="uploadProgress" class="progress-bar progress-bar-striped progress-bar-animated" style="width:0%"></div>
+    <div id="uploadProgress" class="progress-bar progress-bar-striped" style="width:0%"></div>
 </div>
 <div class="container-fluid">
     <br>
@@ -41,7 +41,7 @@ layout: home
           </li>
           <li class="nav-item">
             <a style="text-decoration:none" class="nav-link" data-bs-toggle="tab" href="#failedQuesTab">
-                Failed <span style="display: none;" id="errorBadge" class="badge rounded-pill bg-danger">Error</span>
+                Failed <sup><span style="display: none;" id="errorBadge" class="badge rounded-pill bg-danger">Error</span></sup>
             </a>
           </li>
         </ul>
