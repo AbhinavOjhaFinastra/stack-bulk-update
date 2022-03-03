@@ -80,7 +80,7 @@ $(document).ready(function() {
 				$("div#uploadProgressDiv").show();
 
 				let totalQues = 0;
-				for (let i = 0; i < totalQues; i++) {
+				for (let i = 0; i < line_array.length; i++) {
                     let cellArr = line_array[i];
                     if (cellArr && cellArr.length > 0 && cellArr[0] != "") {
                         if (i != 0) {
