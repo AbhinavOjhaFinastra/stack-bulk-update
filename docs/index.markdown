@@ -22,6 +22,7 @@ layout: home
             <div class="col col-2">
                 <input disabled placeholder="Generated Token" type="text" id="generated-token" class="form-control">
             </div>
+            <div class="col col-2"></div>
             <div class="col col-2">
                 <button type="submit" class="btn btn-primary stick-to-end" id="btnUploadFile">Create Questions</button>
             </div>
