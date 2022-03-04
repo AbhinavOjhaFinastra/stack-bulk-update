@@ -157,7 +157,9 @@ $(document).ready(function() {
                 access_token: access_token
             },
             function(data, textStatus, jqXHR) {
-                let createdQuesHtml = '<tr><td>' + questionData[0] + '</td><td>' + questionData[1] + '</td><td>' + questionData[2] + '</td><td>' + data.link + '</td></tr>';
+                console.log(data);
+                let quesLink = (data && data.link) ? data.link : "";
+                let createdQuesHtml = '<tr><td>' + questionData[0] + '</td><td>' + questionData[1] + '</td><td>' + questionData[2] + '</td><td>' + quesLink + '</td></tr>';
                 $('#createdQues').append(createdQuesHtml);
                 progressWidth += progressStep;
                 $("div#uploadProgress").width(progressWidth + "%");
