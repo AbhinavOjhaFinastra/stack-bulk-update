@@ -226,18 +226,20 @@ function (constUndefined) {
 
         opened = window.open(url, windowName, "width=660,height=480");
 
-        try {
-            opened.frames['se-api-frame'];
-        } catch {
-            window.removeEventListener("message", handler);
+        $(opened).ready(function() {
+            try {
+                opened.frames['se-api-frame'];
+            } catch {
+                window.removeEventListener("message", handler);
 
-            if (opened) {
-                opened.close();
-                clearInterval(pollHandle);
+                if (opened) {
+                    opened.close();
+                    clearInterval(pollHandle);
+                }
+
+                error && error({ errorName: "WrongClientID", errorMessage: "Please enter the correct client ID" });
             }
-
-            error && error({ errorName: "WrongClientID", errorMessage: "Please enter the correct client ID" });
-        }
+        });
     }
 
     return {

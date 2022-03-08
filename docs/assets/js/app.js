@@ -61,6 +61,11 @@ $(document).ready(function() {
 				scope: ['write_access']
 			});
 		}
+
+		$("form#bulk-update-form").change(function(e) {
+		    console.log($(this));
+//		    $(this).validate();
+		})
 	});
 
 	function runCSVUpload(accessToken, requestKey) {
@@ -89,8 +94,6 @@ $(document).ready(function() {
 				var stringHeader = "<thead><tr>";
 				var stringBody = "<tbody>";
 
-				$("div#uploadProgressDiv").show();
-
 				let totalQues = 0;
 				for (let i = 0; i < line_array.length; i++) {
                     let cellArr = line_array[i];
@@ -111,6 +114,7 @@ $(document).ready(function() {
                 let testGetQuestUrl = "https://finastra.stackenterprise.co/api/2.3/questions?fromdate=" + Date.now() + "&key=" + requestKey;
                 $.get(testGetQuestUrl, function(data, textStatus, jqXHR) {
                     // Making the final rest calls to start creating posts (questions/answers)
+                    $("div#uploadProgressDiv").show();
                     startCreatingQuestions(line_array, accessToken, requestKey, progressStep);
 
                 }).fail(function (jqxhr,settings,ex) {
@@ -180,23 +184,24 @@ $(document).ready(function() {
             access_token: access_token
         };
 
-        $.post("https://finastra.stackenterprise.co/api/2.3/questions/add",
-            quesPostData,
-            function(data, textStatus, jqXHR) {
-                console.log(data);
-                let quesLink = (data && data.link) ? data.link : "";
-                let createdQuesHtml = '<tr><td>' + questionData[0] + '</td><td>' + questionData[1] + '</td><td>' + questionData[2] + '</td><td>' + quesLink + '</td></tr>';
-                $('#createdQues').append(createdQuesHtml);
-                progressWidth += progressStep;
-                $("div#uploadProgress").width(progressWidth + "%");
+        $.post("https://finastra.stackenterprise.co/api/2.3/questions/add", quesPostData, function(data, textStatus, jqXHR) {
+            console.log(data);
+            let quesLink = (data && data.link) ? data.link : "";
+            let createdQuesHtml = '<tr><td>' + questionData[0] + '</td><td>' + questionData[1] + '</td><td>' + questionData[2] + '</td><td>' + quesLink + '</td></tr>';
+            $('#createdQues').append(createdQuesHtml);
+            progressWidth += progressStep;
+            $("div#uploadProgress").width(progressWidth + "%");
 
-            }).fail(function(jqXHR, textStatus, errorThrown) {
-                $("span#errorBadge").show();
-                let errorDetail = JSON.parse(jqXHR.responseText);
-                let failedQuesHtml = '<tr><td>' + questionData[0] + '</td><td>' + questionData[1] + '</td><td>' + questionData[2] + '</td><td style="color: red;">' + errorDetail.error_message + '</td></tr>';
-                $('#failedQues').append(failedQuesHtml);
-                progressWidth += progressStep;
-                $("div#uploadProgress").width(progressWidth + "%")
-            });
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+
+            $("span#errorBadge").show();
+            let errorDetail = JSON.parse(jqXHR.responseText);
+            let failedQuesHtml = '<tr><td>' + questionData[0] + '</td><td>' + questionData[1] + '</td><td>' + questionData[2] + '</td><td style="color: red;">' + errorDetail.error_message + '</td></tr>';
+            $('#failedQues').append(failedQuesHtml);
+            progressWidth += progressStep;
+            $("div#uploadProgress").width(progressWidth + "%")
+        });
 	}
+
+	function createStackAnswer(quesId, answerBody)
 });
