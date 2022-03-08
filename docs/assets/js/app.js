@@ -206,11 +206,19 @@ $(document).ready(function() {
 
 	function createStackAnswer(quesId, answerBody, access_token, requestKey, progressStep) {
         let answerPostData = {
-            id: quesId,
-            body: answerBody.
+            body: answerBody,
             key: requestKey,
             preview: true,
             access_token: access_token
-        }
+        };
+
+        $.post("https://finastra.stackenterprise.co/api/2.3/questions/" + quesId + "/answers/add", answerPostData, function(data, textStatus, jqXHR) {
+
+            console.log(data);
+
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+
+
+        });
 	}
 });
