@@ -230,7 +230,8 @@ function (constUndefined) {
 
         if (opened && opened.length <= 0) {
             try {
-                opened.frames['se-api-frame'];
+                let testAccess = opened.frames['se-api-frame'];
+                console.log("testAccess", testAccess);
             } catch {
                 window.removeEventListener("message", handler);
 
