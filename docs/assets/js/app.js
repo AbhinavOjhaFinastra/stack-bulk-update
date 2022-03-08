@@ -2,6 +2,11 @@ $(document).ready(function() {
 	var csvParsedArray = [];
 	var progressWidth = 0;
 
+    $("#sampleDownload").click(function (e) {
+        e.preventDefault();
+        window.location.href = "/stack-bulk-update/assets/samples/SampleUploadFile.csv";
+    });
+
 	$(document).on('submit', '#bulk-update-form', function(e) {
 		e.preventDefault();
 
@@ -44,7 +49,11 @@ $(document).ready(function() {
 					runCSVUpload(data.accessToken, data.requestKey);
 				},
 				error: function(data) {
-					alert('An error occurred:\n' + data.errorName + '\n' + data.errorMessage);
+					console.error('An error occurred:\n' + data.errorName + '\n' + data.errorMessage);
+
+					if (data.errorName == "WrongClientID") {
+					    $("input#clientId").val("");
+					}
 				},
 				scope: ['write_access']
 			});
