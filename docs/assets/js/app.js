@@ -108,7 +108,7 @@ $(document).ready(function() {
 				}
 
                 // Making a get call to catch the error if the provided key is correct or not
-                let testGetQuestUrl = "https://finastra.stackenterprise.co//api/2.3/questions?fromdate=" + Date.now();
+                let testGetQuestUrl = "https://finastra.stackenterprise.co/api/2.3/questions?fromdate=" + Date.now() + "&key=" + requestKey;
                 $.get(testGetQuestUrl, function(data, textStatus, jqXHR) {
                     // Making the final rest calls to start creating posts (questions/answers)
                     startCreatingQuestions(line_array, accessToken, requestKey, progressStep);
@@ -171,15 +171,17 @@ $(document).ready(function() {
 
 	function createStackQuestion(questionData, access_token, requestKey, progressStep) {
 
+	    let quesPostData = {
+            title: questionData[0],
+            body: questionData[1],
+            tags: questionData[2],
+            key: requestKey,
+            preview: true,
+            access_token: access_token
+        };
+
         $.post("https://finastra.stackenterprise.co/api/2.3/questions/add",
-            {
-                title: questionData[0],
-                body: questionData[1],
-                tags: questionData[2],
-                key: requestKey,
-                preview: true,
-                access_token: access_token
-            },
+            quesPostData,
             function(data, textStatus, jqXHR) {
                 console.log(data);
                 let quesLink = (data && data.link) ? data.link : "";

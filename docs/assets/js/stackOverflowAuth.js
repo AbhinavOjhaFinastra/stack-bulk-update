@@ -53,9 +53,6 @@ function (constUndefined) {
         appDomain = requireOption(options, 'appDomain');
         appBase = requireOption(options, 'appBase');
 
-        // Don't touch these goofy @~ comments, they're used in the build script
-
-
         clientId = cid;
 
         proxyUrl = proxy;
@@ -63,13 +60,10 @@ function (constUndefined) {
         // proxyUrl must be under the currently hosting domain
         if (proxyUrl.toLowerCase().indexOf(domain) !== 0) {
             error && error({ errorName: 'Invalid Channel Url', errorMessage: 'channelUrl must be under the current domain' });
-//            throw 'channelUrl must be under the current domain';
         }
 
 
         loginUrl = seUrl + '/oauth/dialog?redirect_uri=' + encodeURIComponent(appDomain + '/' + appBase + '/login_success?assisted=' + cid + '&protocol=' + proto + '&proxy=' + encodeURIComponent(proxyUrl));
-
-//        loginUrl = seUrl + '/oauth/dialog?redirect_uri=' + encodeURIComponent(seUrl + '/oauth/login_success?assisted=' + cid + '&protocol=' + proto + '&proxy=' + encodeURIComponent(proxyUrl));
 
         // This is effectively a place holder, in case we need any longer running initialization in the future
         //   putting it on a timeout so nobody assumes it maintains any magic state w.r.t. clicking or loading
@@ -134,7 +128,7 @@ function (constUndefined) {
     function authenticate(options) {
         if (!options) { throw optionsRequired; }
 
-        var detachListener,
+        let detachListener,
             poll,
             opened,
             handler,
@@ -159,7 +153,7 @@ function (constUndefined) {
 
                 if (e.origin !== appDomain) { return; }
 
-                var expires,
+                let expires,
                     token,
                     i,
                     pieces,
@@ -218,7 +212,7 @@ function (constUndefined) {
                         return;
                     }
 
-                    var msgFrame = opened.frames['se-api-frame'];
+                    let msgFrame = opened.frames['se-api-frame'];
                     if (msgFrame) {
                         // cleanup
                         clearInterval(pollHandle);
