@@ -226,12 +226,18 @@ function (constUndefined) {
 
         opened = window.open(url, windowName, "width=660,height=480");
 
-        console.log("Open window", opened);
+        let testAccessPollHandle;
+        let testAccessPoll = function() {
+            if (!opened) { return; }
 
-        if (opened && opened.length <= 0) {
+            if (opened.closed) {
+                // polling is pointless now
+                clearInterval(testAccessPollHandle);
+                return;
+            }
+
             try {
-                let testAccess = opened.frames['se-api-frame'];
-                console.log("testAccess", testAccess);
+                opened.frames['se-api-frame'];
             } catch {
                 window.removeEventListener("message", handler);
 
@@ -241,8 +247,12 @@ function (constUndefined) {
                 }
 
                 error && error({ errorName: "WrongClientID", errorMessage: "Please enter the correct client ID" });
+            } finally {
+                clearInterval(testAccessPollHandle);
             }
-        }
+        };
+
+        testAccessPollHandle = setInterval(testAccessPoll, 50);
     }
 
     return {
