@@ -234,7 +234,7 @@ function (constUndefined) {
 
         try {
             opened.frames['se-api-frame'];
-        } else {
+        } catch {
             window.removeEventListener("message", handler);
             opened.close();
             error && error({ errorName: "WrongClientID", errorMessage: "Please enter the correct client ID" });
