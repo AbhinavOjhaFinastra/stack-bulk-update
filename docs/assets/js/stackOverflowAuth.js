@@ -224,35 +224,21 @@ function (constUndefined) {
             pollHandle = setInterval(poll, 50);
         }
 
-        opened = window.open(url, windowName, "width=660,height=480");
+        $.get(url, function(data, textStatus, jqXHR) {
+            opened = window.open(url, windowName, "width=660,height=480");
 
-        let testAccessPollHandle;
-        let testAccessPoll = function() {
-            if (!opened) { return; }
+        }).fail(function(jqXHR, textStatus, errorThrown) {
+            console.log(errorThrown);
 
-            if (opened.closed) {
-                // polling is pointless now
-                clearInterval(testAccessPollHandle);
-                return;
+            window.removeEventListener("message", handler);
+
+            if (opened) {
+                opened.close();
+                clearInterval(pollHandle);
             }
 
-            try {
-                opened.frames['se-api-frame'];
-            } catch {
-                window.removeEventListener("message", handler);
-
-                if (opened) {
-                    opened.close();
-                    clearInterval(pollHandle);
-                }
-
-                error && error({ errorName: "WrongClientID", errorMessage: "Please enter the correct client ID" });
-            } finally {
-                clearInterval(testAccessPollHandle);
-            }
-        };
-
-        testAccessPollHandle = setInterval(testAccessPoll, 50);
+            error && error({ errorName: "WrongClientID", errorMessage: "Please enter the correct client ID" });
+        });
     }
 
     return {
