@@ -76,7 +76,7 @@ $(document).ready(function() {
 		let fileUpload = $("#fileToUpload").get(0);
 		let files = fileUpload.files;
 		if (files[0].name.toLowerCase().lastIndexOf(".csv") == -1) {
-			alert("Please upload only CSV files");
+			$("#fileToUpload").val("");
 			return;
 		}
 
@@ -185,6 +185,7 @@ $(document).ready(function() {
         };
 
         $.post("https://finastra.stackenterprise.co/api/2.3/questions/add", quesPostData, function(data, textStatus, jqXHR) {
+
             console.log(data);
             let quesLink = (data && data.link) ? data.link : "";
             let createdQuesHtml = '<tr><td>' + questionData[0] + '</td><td>' + questionData[1] + '</td><td>' + questionData[2] + '</td><td>' + quesLink + '</td></tr>';
@@ -203,5 +204,7 @@ $(document).ready(function() {
         });
 	}
 
-	function createStackAnswer(quesId, answerBody)
+	function createStackAnswer(quesId, answerBody, access_token, requestKey, progressStep) {
+
+	}
 });
