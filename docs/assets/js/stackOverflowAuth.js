@@ -236,7 +236,12 @@ function (constUndefined) {
             opened.frames['se-api-frame'];
         } catch {
             window.removeEventListener("message", handler);
-            opened.close();
+
+            if (opened) {
+                opened.close();
+                clearInterval(pollHandle);
+            }
+
             error && error({ errorName: "WrongClientID", errorMessage: "Please enter the correct client ID" });
         }
     }

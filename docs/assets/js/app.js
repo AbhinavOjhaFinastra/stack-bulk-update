@@ -10,6 +10,9 @@ $(document).ready(function() {
 	$(document).on('submit', '#bulk-update-form', function(e) {
 		e.preventDefault();
 
+		$("input#clientId").removeClass("is-invalid");
+		$("input#clientKey").removeClass("is-invalid");
+
         $("span#errorBadge").hide();
 		$('#createdQues').empty();
         $('#failedQues').empty();
@@ -52,7 +55,7 @@ $(document).ready(function() {
 					console.error('An error occurred:\n' + data.errorName + '\n' + data.errorMessage);
 
 					if (data.errorName == "WrongClientID") {
-					    $("input#clientId").val("");
+					    $("input#clientId").val("").addClass("is-invalid");
 					}
 				},
 				scope: ['write_access']
@@ -104,24 +107,36 @@ $(document).ready(function() {
 				    progressStep = 100/totalQues;
 				}
 
-				for (let i = 0; i < line_array.length; i++) {
-					let cellArr = line_array[i];
+                // Making a get call to catch the error if the provided key is correct or not
+                let testGetQuestUrl = "https://finastra.stackenterprise.co//api/2.3/questions?fromdate=" + Date.now();
+                $.get(testGetQuestUrl, function(data, textStatus, jqXHR) {
+                    // Making the final rest calls to start creating posts (questions/answers)
+                    startCreatingQuestions(line_array, accessToken, requestKey, progressStep);
 
-					if (cellArr && cellArr.length > 0 && cellArr[0] != "") {
-                        if (i != 0) {
-                            createStackQuestion(cellArr, accessToken, requestKey, progressStep);
-                        }
-					}
-				}
+                }).fail(function (jqxhr,settings,ex) {
+                    $("input#clientKey").val("").addClass("is-invalid");
+                });
 
-				$("#bulkUpdateResult").show();
-
-				console.log(csvParsedArray);
+//				console.log(csvParsedArray);
 			}
 		}
 
 		let blob = files[0].slice(0, bytes);
 		reader.readAsBinaryString(blob);
+	}
+
+	function startCreatingQuestions(line_array, accessToken, requestKey, progressStep) {
+	    for (let i = 0; i < line_array.length; i++) {
+            let cellArr = line_array[i];
+
+            if (cellArr && cellArr.length > 0 && cellArr[0] != "") {
+                if (i != 0) {
+                    createStackQuestion(cellArr, accessToken, requestKey, progressStep);
+                }
+            }
+        }
+
+        $("#bulkUpdateResult").show();
 	}
 
 	function CSVToArray(strData, strDelimiter) {
