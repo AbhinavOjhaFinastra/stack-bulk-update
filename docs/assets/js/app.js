@@ -111,7 +111,7 @@ $(document).ready(function() {
 				}
 
                 // Making a get call to catch the error if the provided key is correct or not
-                let testGetQuestUrl = "https://finastra.stackenterprise.co/api/2.3/questions?fromdate=" + Date.now() + "&key=" + requestKey;
+                let testGetQuestUrl = "https://finastra.stackenterprise.co/api/2.3/questions?fromdate=" + Math.round(Date.now() / 1000) + "&key=" + requestKey;
                 $.get(testGetQuestUrl, function(data, textStatus, jqXHR) {
                     // Making the final rest calls to start creating posts (questions/answers)
                     $("div#uploadProgressDiv").show();
