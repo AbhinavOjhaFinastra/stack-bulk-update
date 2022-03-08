@@ -226,7 +226,9 @@ function (constUndefined) {
 
         opened = window.open(url, windowName, "width=660,height=480");
 
-        opened.onload = function() {
+        console.log("Open window", opened);
+
+        if (opened && opened.length <= 0) {
             try {
                 opened.frames['se-api-frame'];
             } catch {
@@ -239,7 +241,7 @@ function (constUndefined) {
 
                 error && error({ errorName: "WrongClientID", errorMessage: "Please enter the correct client ID" });
             }
-        };
+        }
     }
 
     return {

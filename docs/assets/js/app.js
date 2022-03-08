@@ -205,6 +205,12 @@ $(document).ready(function() {
 	}
 
 	function createStackAnswer(quesId, answerBody, access_token, requestKey, progressStep) {
-
+        let answerPostData = {
+            id: quesId,
+            body: answerBody.
+            key: requestKey,
+            preview: true,
+            access_token: access_token
+        }
 	}
 });
