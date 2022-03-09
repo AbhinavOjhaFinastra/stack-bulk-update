@@ -128,7 +128,7 @@ function (constUndefined) {
     function authenticate(options) {
         if (!options) { throw optionsRequired; }
 
-        let detachListener,
+        var detachListener,
             poll,
             opened,
             handler,
@@ -153,7 +153,7 @@ function (constUndefined) {
 
                 if (e.origin !== appDomain) { return; }
 
-                let expires,
+                var expires,
                     token,
                     i,
                     pieces,
@@ -224,8 +224,8 @@ function (constUndefined) {
             pollHandle = setInterval(poll, 50);
         }
 
-        let testAccessPollHandle;
-        let testAccessPoll =
+        var testAccessPollHandle;
+        var testAccessPoll =
             function () {
                 console.log("inside testAccessPoll setInterval");
                 if (!opened) { return; }
