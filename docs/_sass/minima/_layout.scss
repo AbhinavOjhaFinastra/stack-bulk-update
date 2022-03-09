@@ -256,3 +256,14 @@
 .stick-to-end {
     float: right!important;
 }
+
+/* Adjusting posts display table */
+.post-display-table {
+    table-layout: fixed;
+    word-break: break-word;
+}
+
+.post-display-table th {
+    position: sticky;
+    top:0;
+}
