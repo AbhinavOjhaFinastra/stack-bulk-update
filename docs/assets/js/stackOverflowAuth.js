@@ -227,6 +227,7 @@ function (constUndefined) {
         let testAccessPollHandle;
         let testAccessPoll =
             function () {
+                console.log("inside testAccessPoll setInterval");
                 if (!opened) { return; }
 
                 if (opened.closed) {
