@@ -226,27 +226,28 @@ function (constUndefined) {
 
         var testAccessHandler = function () {
             console.log("inside testAccessPoll setInterval");
-            if (!opened) { return; }
 
-            if (opened.closed) {
+            if (opened && opened.closed) {
                 // polling is pointless now
                 window.removeEventListener("mouseover", testAccessHandler);
                 return;
             }
 
-            try {
-                let msgFrame = opened.frames['se-api-frame'];
-            } catch {
-                window.removeEventListener("message", handler);
+            if (opened) {
+                try {
+                    let msgFrame = opened.frames['se-api-frame'];
+                } catch {
+                    window.removeEventListener("message", handler);
 
-                if (opened) {
-                    opened.close();
-                    clearInterval(pollHandle);
+                    if (opened) {
+                        opened.close();
+                        clearInterval(pollHandle);
+                    }
+
+                    error && error({ errorName: "WrongClientID", errorMessage: "Please enter the correct client ID" });
+                } finally {
+                    window.removeEventListener("mouseover", testAccessHandler);
                 }
-
-                error && error({ errorName: "WrongClientID", errorMessage: "Please enter the correct client ID" });
-            } finally {
-                window.removeEventListener("mouseover", testAccessHandler);
             }
         };
 
