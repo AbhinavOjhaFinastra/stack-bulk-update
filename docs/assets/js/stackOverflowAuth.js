@@ -224,35 +224,33 @@ function (constUndefined) {
             pollHandle = setInterval(poll, 50);
         }
 
-        var testAccessPollHandle;
-        var testAccessPoll =
-            function () {
-                console.log("inside testAccessPoll setInterval");
-                if (!opened) { return; }
+        var testAccessHandler = function () {
+            console.log("inside testAccessPoll setInterval");
+            if (!opened) { return; }
 
-                if (opened.closed) {
-                    // polling is pointless now
-                    clearInterval(testAccessPollHandle);
-                    return;
+            if (opened.closed) {
+                // polling is pointless now
+                window.removeEventListener("mouseover", testAccessHandler);
+                return;
+            }
+
+            try {
+                let msgFrame = opened.frames['se-api-frame'];
+            } catch {
+                window.removeEventListener("message", handler);
+
+                if (opened) {
+                    opened.close();
+                    clearInterval(pollHandle);
                 }
 
-                try {
-                    let msgFrame = opened.frames['se-api-frame'];
-                } catch {
-                    window.removeEventListener("message", handler);
+                error && error({ errorName: "WrongClientID", errorMessage: "Please enter the correct client ID" });
+            } finally {
+                window.removeEventListener("mouseover", testAccessHandler);
+            }
+        };
 
-                    if (opened) {
-                        opened.close();
-                        clearInterval(pollHandle);
-                    }
-
-                    error && error({ errorName: "WrongClientID", errorMessage: "Please enter the correct client ID" });
-                } finally {
-                    clearInterval(testAccessPollHandle);
-                }
-            };
-
-        testAccessPollHandle = setInterval(testAccessPoll, 50);
+        window.addEventListener("mouseover", testAccessHandler);
 
         opened = window.open(url, windowName, "width=660,height=480");
     }
