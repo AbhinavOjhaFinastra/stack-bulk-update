@@ -225,7 +225,7 @@ function (constUndefined) {
         }
 
         let testAccessPollHandle;
-        testAccessPoll =
+        let testAccessPoll =
             function () {
                 if (!opened) { return; }
 
@@ -251,7 +251,7 @@ function (constUndefined) {
                 }
             };
 
-        testAccessPollHandle = setInterval(poll, 50);
+        testAccessPollHandle = setInterval(testAccessPoll, 50);
 
         opened = window.open(url, windowName, "width=660,height=480");
     }
