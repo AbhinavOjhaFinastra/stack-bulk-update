@@ -87,7 +87,7 @@ $(document).ready(function() {
 
 		// Check if the uploaded file is a CSV file or not
 		if (files[0].name.toLowerCase().lastIndexOf(".csv") == -1) {
-			$("#fileToUpload").val("");
+			$("#fileToUpload").val("").addClass("is-invalid");
 			return;
 		}
 
@@ -104,9 +104,11 @@ $(document).ready(function() {
 				if (lines.length == bytes) {
 					line_array = line_array.splice(0, line_array.length - 1);
 				}
-				var columnArray = [];
-				var stringHeader = "<thead><tr>";
-				var stringBody = "<tbody>";
+
+				if (!isCSVFileValid(line_array)) {
+				    $("#fileToUpload").val("").addClass("is-invalid");
+                    return;
+				}
 
                 // Go through all the rows to determine the number of questions/posts to determine the progress bar step count
 				let totalQues = 0;
@@ -137,11 +139,26 @@ $(document).ready(function() {
                 });
 
 //				console.log(csvParsedArray);
+			} else {
+			    $("#fileToUpload").val("").addClass("is-invalid");
+                return;
 			}
 		}
 
 		let blob = files[0].slice(0, bytes);
 		reader.readAsBinaryString(blob);
+	}
+
+	function isCSVFileValid(line_array) {
+	    if (line_array && line_array.length > 1) {
+	        let headerRow = line_array[0];
+	        // 4 columns = title,body,tags,answer
+	        if (headerRow && headerRow.length == 4) {
+	            return true;
+	        }
+	    }
+
+	    return false;
 	}
 
     // Feed this method with each line of the CSV file to process the cell data

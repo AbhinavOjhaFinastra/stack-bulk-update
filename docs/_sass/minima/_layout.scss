@@ -263,7 +263,10 @@
     word-break: break-word;
 }
 
-// .post-display-table th {
-//     position: sticky;
-//     top:0;
-// }
+.post-display-table th {
+    background: #fff;
+}
+
+.csv-table {
+    height: 100vh;
+}
