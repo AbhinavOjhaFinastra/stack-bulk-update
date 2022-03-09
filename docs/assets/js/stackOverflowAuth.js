@@ -225,8 +225,6 @@ function (constUndefined) {
         }
 
         var testAccessHandler = function () {
-            console.log("inside testAccessPoll setInterval");
-
             if (opened && opened.closed) {
                 // polling is pointless now
                 window.removeEventListener("mouseover", testAccessHandler);
@@ -251,6 +249,9 @@ function (constUndefined) {
             }
         };
 
+        // This event will check if the window opened for auth is accessible, since using wrong client id will mean opened window frame will not be accessible due
+        // to cross origin policy. Had to use mouse over for the parent window because in such case opened window has the access and so the rest of code doesn't
+        // get triggered as the parent window loses focus to the child window, and even after manually closing it, rest of the code is not gonna get triggered
         window.addEventListener("mouseover", testAccessHandler);
 
         opened = window.open(url, windowName, "width=660,height=480");
