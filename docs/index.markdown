@@ -55,19 +55,43 @@ layout: home
         <div class="tab-content">
             <div id="createdQuesTab" class="tab-pane active table-responsive csv-table" style="margin-top: 20px;">
                 <table class="table table-bordered table-hover table-striped post-display-table">
-                    <thead><tr><th style="width: 10%;">Title</th><th style="width: 25%;">Body</th><th style="width: 10%;">Tags</th><th style="width: 15%;">Question Link</th><th style="width: 25%;">Answer</th><th style="width: 15%;">Answer Link</th></tr></thead>
+                    <thead>
+                        <tr>
+                            <th class="sticky-top" style="width: 10%;">Title</th>
+                            <th class="sticky-top" style="width: 25%;">Body</th>
+                            <th class="sticky-top" style="width: 10%;">Tags</th>
+                            <th class="sticky-top" style="width: 15%;">Question Link</th>
+                            <th class="sticky-top" style="width: 25%;">Answer</th>
+                            <th class="sticky-top" style="width: 15%;">Answer Link</th>
+                        </tr>
+                    </thead>
                     <tbody id="createdQues"></tbody>
                 </table>
             </div>
             <div id="failedQuesTab" class="tab-pane fade table-responsive csv-table" style="margin-top: 20px;">
                 <table class="table table-bordered table-hover table-striped post-display-table">
-                    <thead><tr><th style="width: 15%;">Title</th><th style="width: 25%;">Body</th><th style="width: 10%;">Tags</th><th style="width: 25%;">Error</th><th style="width: 25%;">Answer</th></tr></thead>
+                    <thead>
+                        <tr>
+                            <th class="sticky-top" style="width: 15%;">Title</th>
+                            <th class="sticky-top" style="width: 25%;">Body</th>
+                            <th class="sticky-top" style="width: 10%;">Tags</th>
+                            <th class="sticky-top" style="width: 25%;">Error</th>
+                            <th class="sticky-top" style="width: 25%;">Answer</th>
+                        </tr>
+                    </thead>
                     <tbody id="failedQues"></tbody>
                 </table>
             </div>
             <div id="failedAnswerTab" class="tab-pane fade table-responsive csv-table" style="margin-top: 20px;">
                 <table class="table table-bordered table-hover table-striped post-display-table">
-                    <thead><tr><th style="width: 10%;">Question Id</th><th style="width: 20%;">Question Title</th><th style="width: 35%;">Answer</th><th style="width: 35%;">Error</th></tr></thead>
+                    <thead>
+                        <tr>
+                            <th class="sticky-top" style="width: 10%;">Question Id</th>
+                            <th class="sticky-top" style="width: 20%;">Question Title</th>
+                            <th class="sticky-top" style="width: 35%;">Answer</th>
+                            <th class="sticky-top" style="width: 35%;">Error</th>
+                        </tr>
+                    </thead>
                     <tbody id="failedAns"></tbody>
                 </table>
             </div>
