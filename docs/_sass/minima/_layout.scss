@@ -264,7 +264,13 @@
 }
 
 .post-display-table th {
-    background: #fff;
+    background-color: #fff!important;
+    border-bottom: 2px solid currentColor;
+}
+
+
+.post-display-table tbody {
+    border-top: none!important;
 }
 
 .csv-table {
